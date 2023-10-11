@@ -17,9 +17,7 @@ class RegisterView(CreateView):
     success_url = reverse_lazy('users:verification')
 
     def form_valid(self, form):
-        email = form.cleaned_data.get('email')
         token = secrets.token_hex(11)
-
         user = form.save(commit=False)
         user.token = token
         user.is_active = False

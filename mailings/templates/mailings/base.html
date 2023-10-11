@@ -7,14 +7,25 @@
     <title>
         Сайт Рассылок
     </title>
-    <a class="btn btn-primary" href="{% url 'mailings:index' %}" role="button">Главная</a>
-    <a class="btn btn-primary" href="{% url 'mailings:index' %}" role="button">Контакты</a>
-    <a class="btn btn-primary" href="{% url 'users:register' %}" role="button">Регистрация</a>
-    <a class="btn btn-primary" href="{% url 'users:login' %}" role="button">Вход</a>
+<br>
+    <div class="d-print-table-row">
+        <a class="btn btn-primary" href="{% url 'mailings:index' %}" role="button">Главная</a>
+        <a class="btn btn-primary" href="{% url 'mailings:index' %}" role="button">Контакты</a>
+        {% if user.is_authenticated %}
+            <a class="btn btn-primary" href="{% url 'users:profile' %}" role="button">Профиль</a>
+            <a class="btn btn-primary" href="{% url 'users:logout' %}" role="button">Выйти</a>
+            <a class="btn btn-primary" href="{% url 'mailings:mailings_list' %}" role="button">Рассылки</a>
+        {% else %}
+            <a class="btn btn-primary" href="{% url 'users:login' %}" role="button">Войти</a>
+            <a class="btn btn-primary" href="{% url 'users:register' %}" role="button">Регистрация</a>
+        {% endif %}
+    </div>
 
 
 </head>
 <body>
+<h1 class="text-lg-center">Добро пожаловать на сайт рассылок</h1>
+
 {% block content %}
 {% endblock %}
 

@@ -1,0 +1,37 @@
+{% extends 'mailings/base.html' %}
+
+{% block content %}
+
+    {% if user.is_active %}
+
+        <div class="col-12">
+            <div class="row">
+                <a class="btn btn-lg btn-block btn-outline-primary" href="{% url 'mailings:mailings_create' %}">Создать продукт</a>
+            </div>
+        </div>
+
+        <div class="row">
+            {% for object in object_list %}
+                <div class="col-sm-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ object.name }}</h5>
+                            <p class="card-text">{{ object.periodicity }}</p>
+                            <p class="card-text">{{ object.status }}</p>
+                            <a class="btn btn-lg btn-block btn-outline-primary"
+                               href="#">Запустить</a>
+                            <a class="btn btn-lg btn-block btn-outline-primary"
+                               href="{% url 'mailings:mailings_update' object.pk %}">Редактировать</a>
+                            <a class="btn btn-lg btn-block btn-outline-primary"
+                               href="#">Удалить</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+        <p align="center">Вы не авторизовались. Доступа к продуктам нет.</p>
+    {% endif %}
+
+{% endblock %}

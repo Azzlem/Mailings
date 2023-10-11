@@ -12,21 +12,26 @@ class UserRegisterForm(UserCreationForm):
             'password2'
         )
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+
 
 class UserProfileForm(UserChangeForm):
     class Meta:
         model = User
         fields = (
             'email',
-            'first_name',
-            'last_name',
-            'phone',
-            'avatar'
+            'fio',
+            'about',
         )
 
-    def __int__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self.fields['password'].widget = forms.HiddenInput()
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
 
 
