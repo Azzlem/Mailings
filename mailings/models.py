@@ -1,5 +1,8 @@
 from django.db import models
 
+from default import NULLABLE
+from users.models import User
+
 
 class Message(models.Model):
     name = models.CharField(max_length=50, verbose_name='заголовок')
@@ -23,6 +26,7 @@ class Mailings(models.Model):
         (month, 'month'),
     ]
     name = models.CharField(default='Рассылка', max_length=150, verbose_name='название рассылки')
+    user_creator = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE)
     periodicity = models.CharField(
         max_length=1,
         choices=periodicity_choises,
@@ -42,6 +46,10 @@ class Mailings(models.Model):
                               choices=status_choises,
                               default=created,
                               )
+
+    def __str__(self):
+        return f'{self.name} {self.user_creator}'
+
     class Meta:
         verbose_name = 'Рассылка'
         verbose_name_plural = 'Рассылки'

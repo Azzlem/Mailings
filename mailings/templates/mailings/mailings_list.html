@@ -9,24 +9,26 @@
                 <a class="btn btn-lg btn-block btn-outline-primary" href="{% url 'mailings:mailings_create' %}">Создать продукт</a>
             </div>
         </div>
+        <br>
 
         <div class="row">
             {% for object in object_list %}
+                {% if user.pk == object.user_creator_id %}
                 <div class="col-sm-3">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">{{ object.name }}</h5>
-                            <p class="card-text">{{ object.periodicity }}</p>
                             <p class="card-text">{{ object.status }}</p>
                             <a class="btn btn-lg btn-block btn-outline-primary"
-                               href="#">Запустить</a>
+                               href="{% url 'mailings:mailings_detail' object.pk %}">Просмотреть</a>
                             <a class="btn btn-lg btn-block btn-outline-primary"
                                href="{% url 'mailings:mailings_update' object.pk %}">Редактировать</a>
                             <a class="btn btn-lg btn-block btn-outline-primary"
-                               href="#">Удалить</a>
+                               href="{% url 'mailings:mailings_delete' object.pk %}">Удалить</a>
                         </div>
                     </div>
                 </div>
+                {% endif %}
             {% endfor %}
         </div>
 

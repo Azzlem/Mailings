@@ -48,10 +48,12 @@ def verification_view(request):
 class ProfileView(UpdateView):
     model = User
     form_class = UserProfileForm
-    success_url = reverse_lazy('users:profile')
+    success_url = reverse_lazy('mailings:index')
 
     def get_object(self, queryset=None):
         return self.request.user
+
+
 
 
 def recovery_view(request):
