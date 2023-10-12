@@ -19,6 +19,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ object.name }}</h5>
                             <p class="card-text">{{ object.status }}</p>
+                            <p class="card-text">{{ object.user_creator.fio }}</p>
                             <a class="btn btn-lg btn-block btn-outline-primary"
                                href="{% url 'mailings:mailings_detail' object.pk %}">Просмотреть</a>
                             <a class="btn btn-lg btn-block btn-outline-primary"

@@ -1,9 +1,10 @@
+from django.forms import inlineformset_factory
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, UpdateView, DetailView, DeleteView
 
-from mailings.forms import MailingsForm
-from mailings.models import Mailings
+from mailings.forms import MailingsForm, MessageForm
+from mailings.models import Mailings, Message
 
 
 def index(request):

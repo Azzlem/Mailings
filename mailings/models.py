@@ -27,6 +27,7 @@ class Mailings(models.Model):
     ]
     name = models.CharField(default='Рассылка', max_length=150, verbose_name='название рассылки')
     user_creator = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE)
+    message = models.ForeignKey(Message, on_delete=models.CASCADE, **NULLABLE)
     periodicity = models.CharField(
         max_length=1,
         choices=periodicity_choises,
