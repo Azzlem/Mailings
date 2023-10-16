@@ -8,9 +8,10 @@
                 <h5 class="card-title">{{ object.name }}</h5>
                 <p class="card-text">Периодичность: {{ object.periodicity }}</p>
                 <p class="card-text">Статус: {{ object.created}}</p>
-                <p class="card-text">Автор: {{ object.user_creator.fio}}</p>
+                <p class="card-text">Автор: {{ object.user_creator}}</p>
                 <p class="card-text">Название рассылки: {{ object.message.name}}</p>
                 <p class="card-text">Текст рассылки: {{ object.message.text}}</p>
+                <p class="card-text">Текст рассылки: {{ object.clients }}</p>
                 <a class="btn btn-outline-primary" href="{% url 'mailings:mailings_list' %}">
                     Назад
                 </a>

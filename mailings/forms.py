@@ -1,12 +1,12 @@
 from django import forms
 
-from mailings.models import Mailings, Message
+from mailings.models import Mailings, Message, Client
 
 
 class MailingsForm(forms.ModelForm):
     class Meta:
         model = Mailings
-        fields = '__all__'
+        exclude = ('user_creator',)
 
     def clean_name(self):
         cleaned_data = self.cleaned_data.get('name')

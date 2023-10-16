@@ -13,7 +13,7 @@
 
         <div class="row">
             {% for object in object_list %}
-                {% if user.pk == object.user_creator_id %}
+                {% if user.email == object.user_creator %}
                 <div class="col-sm-3">
                     <div class="card">
                         <div class="card-body">

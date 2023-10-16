@@ -27,8 +27,9 @@ class MailingsCreateView(CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
-        self.object.user_creator = self.request.user
+        self.object.user_creator = self.request.user.email
         self.object.save()
+
         return super().form_valid(form)
 
     def get_success_url(self):

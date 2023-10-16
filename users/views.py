@@ -54,8 +54,6 @@ class ProfileView(UpdateView):
         return self.request.user
 
 
-
-
 def recovery_view(request):
     if request.method == 'POST':
         try:

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from mailings.models import Message, Mailings
+from mailings.models import Message, Mailings, Client
 
 
 @admin.register(Message)
@@ -14,4 +14,13 @@ class MailingsAdmin(admin.ModelAdmin):
         'name',
         'periodicity',
         'status',
+    )
+
+
+@admin.register(Client)
+class ClientAdmin(admin.ModelAdmin):
+    list_display = (
+        'first_name',
+        'second_name',
+        'email',
     )

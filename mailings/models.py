@@ -1,3 +1,4 @@
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from default import NULLABLE
@@ -16,26 +17,43 @@ class Message(models.Model):
         verbose_name_plural = 'Сообщения'
 
 
+class Client(models.Model):
+    first_name = models.CharField(max_length=50, verbose_name='имя')
+    second_name = models.CharField(max_length=50, verbose_name='фамилия')
+    sur_name = models.CharField(max_length=50, verbose_name='отчество')
+    email = models.EmailField(max_length=150, verbose_name='почта')
+    comments = models.TextField(verbose_name='коментарии', **NULLABLE)
+
+    def __str__(self):
+        return f'{self.second_name} {self.first_name} {self.sur_name}'
+
+    class Meta:
+        verbose_name = 'клиент'
+        verbose_name_plural = 'клиенты'
+
+
 class Mailings(models.Model):
-    day = 'D'
-    week = 'W'
-    month = 'M'
+    day = 'Раз в день'
+    week = 'Раз в неделю'
+    month = 'Раз в месяц'
     periodicity_choises = [
         (day, 'day'),
         (week, 'week'),
         (month, 'month'),
     ]
     name = models.CharField(default='Рассылка', max_length=150, verbose_name='название рассылки')
-    user_creator = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE)
-    message = models.ForeignKey(Message, on_delete=models.CASCADE, **NULLABLE)
+    user_creator = models.EmailField(verbose_name='создатель',
+                                     **NULLABLE)  # ForeignKey(User, on_delete=models.CASCADE, default='1')
+    message = models.ForeignKey(Message, on_delete=models.CASCADE, default='2')
+    clients = models.ManyToManyField(Client, verbose_name='клиенты')
     periodicity = models.CharField(
-        max_length=1,
+        max_length=15,
         choices=periodicity_choises,
         default=day,
     )
-    completed = 'COM'
-    created = 'CRE'
-    launched = 'LAU'
+    completed = 'Запущена'
+    created = 'Создана'
+    launched = 'Законченна'
 
     status_choises = [
         (completed, 'completed'),
@@ -43,7 +61,7 @@ class Mailings(models.Model):
         (launched, 'launched'),
     ]
     status = models.CharField(verbose_name='статус рассылки',
-                              max_length=3,
+                              max_length=15,
                               choices=status_choises,
                               default=created,
                               )
@@ -54,3 +72,8 @@ class Mailings(models.Model):
     class Meta:
         verbose_name = 'Рассылка'
         verbose_name_plural = 'Рассылки'
+
+
+class IntersectionMailingsClients(models.Model):
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    mailings = models.ForeignKey(Mailings, on_delete=models.CASCADE)
