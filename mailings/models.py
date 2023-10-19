@@ -46,6 +46,7 @@ class Mailings(models.Model):
                                      **NULLABLE)  # ForeignKey(User, on_delete=models.CASCADE, default='1')
     message = models.ForeignKey(Message, on_delete=models.CASCADE, default='2')
     clients = models.ManyToManyField(Client, verbose_name='клиенты')
+    time_to_send = models.TimeField(verbose_name='время рассылки', **NULLABLE)
     periodicity = models.CharField(
         max_length=15,
         choices=periodicity_choises,

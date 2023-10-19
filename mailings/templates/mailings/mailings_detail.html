@@ -11,7 +11,9 @@
                 <p class="card-text">Автор: {{ object.user_creator}}</p>
                 <p class="card-text">Название рассылки: {{ object.message.name}}</p>
                 <p class="card-text">Текст рассылки: {{ object.message.text}}</p>
-                <p class="card-text">Текст рассылки: {{ object.clients }}</p>
+                {% for client in object.clients.all %}
+                <p class="card-text">Данные клиента:  {{ client.pk }}</p>
+                {% endfor %}
                 <a class="btn btn-outline-primary" href="{% url 'mailings:mailings_list' %}">
                     Назад
                 </a>

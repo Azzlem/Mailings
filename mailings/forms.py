@@ -1,12 +1,15 @@
 from django import forms
 
-from mailings.models import Mailings, Message, Client
+from mailings.models import Mailings, Message
 
 
 class MailingsForm(forms.ModelForm):
     class Meta:
         model = Mailings
         exclude = ('user_creator',)
+        widgets = {
+            'time_to_send': forms.TimeInput(attrs={'type': 'time'}),
+        }
 
     def clean_name(self):
         cleaned_data = self.cleaned_data.get('name')
