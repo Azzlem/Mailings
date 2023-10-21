@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 
     'mailings',
     'users',
-    'send_mail',
+    'clients',
     'django_crontab',
 ]
 
@@ -115,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -152,5 +152,5 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('MAIL_PASSWORD_SERVER')
 
 CRONJOBS = [
-    ('*/1 * * * *', 'mailings.cron.my_scheduled_job', '>> /tmp/scheduled_job.log')
+    ('*/2 * * * *', 'mailings.cron.my_scheduled_job'),
 ]

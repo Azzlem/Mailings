@@ -15,6 +15,7 @@
             <a class="btn btn-primary" href="{% url 'users:profile' %}" role="button">Профиль</a>
             <a class="btn btn-primary" href="{% url 'users:logout' %}" role="button">Выйти</a>
             <a class="btn btn-primary" href="{% url 'mailings:mailings_list' %}" role="button">Рассылки</a>
+            <a class="btn btn-primary" href="{% url 'clients:clients_list' %}" role="button">Клиенты</a>
         {% else %}
             <a class="btn btn-primary" href="{% url 'users:login' %}" role="button">Войти</a>
             <a class="btn btn-primary" href="{% url 'users:register' %}" role="button">Регистрация</a>

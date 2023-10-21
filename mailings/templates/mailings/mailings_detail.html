@@ -12,7 +12,7 @@
                 <p class="card-text">Название рассылки: {{ object.message.name}}</p>
                 <p class="card-text">Текст рассылки: {{ object.message.text}}</p>
                 {% for client in object.clients.all %}
-                <p class="card-text">Данные клиента:  {{ client.pk }}</p>
+                <p class="card-text">Данные клиента:  {{ client.email }}</p>
                 {% endfor %}
                 <a class="btn btn-outline-primary" href="{% url 'mailings:mailings_list' %}">
                     Назад

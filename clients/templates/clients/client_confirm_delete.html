@@ -1,0 +1,25 @@
+{% extends 'mailings/base.html' %}
+
+{% block content %}
+<div class="col-12">
+    <div class="row">
+        <div class="col-3">
+            <div class="card">
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <p>Хотите удалить продукт "{{object.email}} ?"</p>
+                        <button type="submit" class="btn btn-lg btn-block btn-outline-danger">
+                            Подтвердить
+                        </button>
+                        <a class="btn btn-lg btn-block btn-outline-primary" href="{% url 'clients:clients_list' %}">
+                            ОТМЕНА
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
