@@ -3,30 +3,37 @@
 {% block content %}
 
     {% if user.is_active %}
-        <div class="row">
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">ID рассылки</th>
+                <th scope="col">Успешность рассылки</th>
+                <th scope="col">Имя рассылки</th>
+                <th scope="col">Имя сообщения</th>
+                <th scope="col">Время рассылки</th>
+                <th scope="col">Создатель рассылки</th>
+            </tr>
+            </thead>
+            <tbody>
             {% for object in object_list %}
                 {% if user.email == object.user_created %}
-
-                <div class="col-sm-3">
-                    <div class="card">
-                        <div class="title">
-                            <h5 class="card-title text-lg-center">ID рассылки: {{ object.pk }}</h5>
-                        </div>
-                        <div class="card-body">
-
-                            <p class="card-text text-sm-center">Успешность рассылки: {{ object.success }}</p>
-                            <p class="card-text text-sm-center">Имя рассылки: {{ object.mailings_name }}</p>
-                            <p class="card-text text-sm-center">Имя сообщения: {{ object.message_title }}</p>
-                            <p class="card-text text-sm-center">Время рассылки: {{ object.time }}</p>
-                            <p class="card-text text-sm-center">Создатель рассылки: {{ object.user_created }}</p>
-                            <p class="card-text text-sm-center">Текст рассылки: {{ object.message_text }}</p>
-                        </div>
-                    </div>
-                <br>
-                </div>
+                    <tr>
+                        <th scope="row">{{ object.pk }}</th>
+                        {% if object.success == True %}
+                            <td>Успешно</td>
+                        {% else %}
+                            <td>Провалено</td>
+                            {% endif %}
+                        <td>{{ object.mailings_name }}</td>
+                        <td>{{ object.message_title }}</td>
+                        <td>{{ object.time }}</td>
+                        <td>{{ object.user_created }}</td>
+                    </tr>
                 {% endif %}
             {% endfor %}
-        </div>
+            </tbody>
+        </table>
 
     {% else %}
         <p align="center">Вы не авторизовались. Доступа к продуктам нет.</p>
