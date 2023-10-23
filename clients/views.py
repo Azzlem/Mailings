@@ -3,6 +3,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DetailView, D
 
 from clients.models import Client
 from clients.forms import ClientsForm
+from mailings.models import LogMailings
 
 
 class ClientsListView(ListView):
@@ -48,3 +49,8 @@ class ClientsDeleteView(DeleteView):
 
     def get_success_url(self):
         return reverse('clients:clients_list')
+
+
+class LogMailingsView(ListView):
+    model = LogMailings
+    template_name = 'mailings/log_mailings_list.html'

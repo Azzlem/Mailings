@@ -152,6 +152,6 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('MAIL_PASSWORD_SERVER')
 
 CRONJOBS = [
-    ('37 22 * * *', 'mailings.cron.my_scheduled_job'),
-    ('35 22 * * *', 'mailings.cron.reset'),
+    ('*/2 * * * *', 'mailings.cron.my_scheduled_job'),
+    # ('*/10 * * * *', 'mailings.cron.reset'),
 ]

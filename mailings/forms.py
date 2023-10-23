@@ -9,6 +9,7 @@ class MailingsForm(forms.ModelForm):
         exclude = ('user_creator',)
         widgets = {
             'time_to_send': forms.TimeInput(attrs={'type': 'time'}),
+            'day_start': forms.DateInput(attrs={'type': 'date'}),
         }
 
     def clean_name(self):

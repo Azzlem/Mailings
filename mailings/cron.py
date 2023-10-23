@@ -1,29 +1,31 @@
-from django.core.mail import send_mail
+from mailings.models import Mailings
+from datetime import datetime, timedelta, date
+import calendar
 
-from djangoProject import settings
-from mailings.models import Message, Mailings, Client
-from datetime import datetime
-
-from mailings.utils import minute_in_hour, mail_sending
+from mailings.utils import mail_sending, log_in, daytime_comparison
 
 
 def my_scheduled_job():
     for mailing in Mailings.objects.all():
-        print(mailing.time_to_send)
-        print(datetime.now().time().strftime("%H:%M"))
-        if minute_in_hour(mailing.time_to_send.strftime("%H:%M")) <= minute_in_hour(
-                datetime.now().time().strftime("%H:%M")) and mailing.status == 'Создана':
-            # pk_list_send = mailing.clients.all()
-            # clients = [client.email for client in Client.objects.all() if client.pk in pk_list_send]
-            data = mailing.message.name, mailing.message.text, mailing.status, [el.email for el in
-                                                                                mailing.clients.all()]
-            mail_sending(data)
-            mailing.status = 'Запущена'
-            mailing.save()
+        print(type(mailing.day_start))
 
-
-def reset():
-    for mailing in Mailings.objects.all():
-        if mailing.status == 'Запущена':
-            mailing.status = 'Создана'
+        if daytime_comparison(mailing.time_to_send, mailing.day_start):
+            data = mailing.name, mailing.message.text, [el.email for el in mailing.clients.all()]
+            result = mail_sending(data)
+            log_in(
+                datetime.now().strftime("%Y:%m:%d" " " "%H:%M"),
+                mailing.name,
+                mailing.message.name,
+                mailing.message.text,
+                result,
+                mailing.user_creator,
+            )
+            if mailing.periodicity == 'Раз в день':
+                mailing.day_start = mailing.day_start + timedelta(days=1)
+            elif mailing.periodicity == 'Раз в неделю':
+                mailing.day_start = mailing.day_start + timedelta(days=7)
+            elif mailing.periodicity == 'Раз в месяц':
+                today = date.today()
+                days = calendar.monthrange(today.year, today.month)[1]
+                mailing.day_start = mailing.day_start + timedelta(days=days)
             mailing.save()
