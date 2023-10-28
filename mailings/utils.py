@@ -37,6 +37,7 @@ def mail_sending(data):
         from_email=settings.EMAIL_HOST_USER,
         recipient_list=emails,
     )
+
     return result
 
 

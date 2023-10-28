@@ -20,7 +20,11 @@ def my_scheduled_job():
                 result,
                 mailing.user_creator,
             )
-            if mailing.periodicity == 'Раз в день':
+            if not result:
+                data = 'Ошибка', f'рассылка {mailing.name}', mailing.user_creator
+                mail_sending(data)
+                mailing.time_to_send = mailing.time_to_send + timedelta(minutes=20)
+            elif mailing.periodicity == 'Раз в день':
                 mailing.day_start = mailing.day_start + timedelta(days=1)
             elif mailing.periodicity == 'Раз в неделю':
                 mailing.day_start = mailing.day_start + timedelta(days=7)

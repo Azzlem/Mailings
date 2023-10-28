@@ -1,0 +1,49 @@
+{% extends 'mailings/base.html' %}
+
+{% block content %}
+
+    <div class="row text-lg-center">
+        <div class="col-4">
+            <p> Количество рассылок всего: {{ context_list.0 }} </p>
+        </div>
+        <div class="col-4">
+
+            <p> Количество рассылок активных: {{ context_list.1 }} </p>
+        </div>
+        <div class="col-4">
+
+            <p> Количество клиентов: {{ context_list.2 }} </p>
+        </div>
+
+
+    </div>
+    <div class="conteiner">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-6">
+                        {% for object in context_list.3 %}
+                            <div class="card">
+                                <div class="card-title">
+                                    <p>{{ object.title }}</p>
+                                </div>
+                                <div class="card-body">
+                                    <p>Просмотров: {{ object.number_of_views }}</p>
+                                    <p>{{ object.date_of_published }}</p>
+                                    <p>{{ object.user_creator }}</p>
+                                    <p>{{ object.content }}</p>
+                                    <p>{{ object.pk }}</p>
+                                    <a class="btn btn-lg btn-block btn-outline-primary"
+                                       href="{% url 'blog:blog_detail' object.pk %}">
+                                        Посмотреть
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

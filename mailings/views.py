@@ -1,24 +1,43 @@
-from django.forms import inlineformset_factory
+import random
+
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, UpdateView, DetailView, DeleteView
 
-from mailings.forms import MailingsForm, MessageForm
-from mailings.models import Mailings, Message
+from blog.models import Blog
+from clients.models import Client
+from mailings.forms import MailingsForm
+from mailings.models import Mailings
 
 
 def index(request):
-    return render(request, 'mailings/base.html')
+    is_active = 0
+    for el in Mailings.objects.all():
+        if el.status == 'Запущена':
+            is_active += 1
+    blog_object = Blog.objects.all().order_by('?')[:3]
+
+    context = {
+        'context_list': [
+            Mailings.objects.all().count(),
+            is_active,
+            Client.objects.all().count(),
+            blog_object,
+        ]
+    }
+    return render(request, 'mailings/index.html', context)
 
 
 class MailingsListView(ListView):
     model = Mailings
     template_name = 'mailings/mailings_list.html'
 
-    def get_context_data(self, **kwargs):
-        context_data = super().get_context_data(**kwargs)
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if not self.request.user.groups.filter(name='Manager').first():
+            queryset = queryset.filter(user_creator=self.request.user)
 
-        return context_data
+        return queryset
 
 
 class MailingsCreateView(CreateView):
@@ -39,6 +58,15 @@ class MailingsCreateView(CreateView):
 class MailingsUpdateView(UpdateView):
     model = Mailings
     form_class = MailingsForm
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        if self.request.user.email != self.object.user_creator:
+            mailing_fields = [field for field in form.fields.keys()]
+            for field in mailing_fields:
+                if not self.request.user.has_perm(f'mailings.set_{field}'):
+                    del form.fields[field]
+        return form
 
     def get_success_url(self):
         return reverse('mailings:mailings_list')

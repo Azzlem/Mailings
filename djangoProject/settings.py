@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'users',
     'clients',
     'django_crontab',
+    'blog',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -155,3 +156,9 @@ CRONJOBS = [
     ('*/2 * * * *', 'mailings.cron.my_scheduled_job'),
     # ('*/10 * * * *', 'mailings.cron.reset'),
 ]
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379'
+    }
+}
