@@ -1,0 +1,42 @@
+{% extends 'mailings/base.html' %}
+
+{% block content %}
+
+    {% if user.is_active %}
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">ID рассылки</th>
+                <th scope="col">Успешность рассылки</th>
+                <th scope="col">Имя рассылки</th>
+                <th scope="col">Имя сообщения</th>
+                <th scope="col">Время рассылки</th>
+                <th scope="col">Создатель рассылки</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for object in object_list %}
+                {% if user.email == object.user_created %}
+                    <tr>
+                        <th scope="row">{{ object.pk }}</th>
+                        {% if object.success == True %}
+                            <td>Успешно</td>
+                        {% else %}
+                            <td>Провалено</td>
+                            {% endif %}
+                        <td>{{ object.mailings_name }}</td>
+                        <td>{{ object.message_title }}</td>
+                        <td>{{ object.time }}</td>
+                        <td>{{ object.user_created }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+
+    {% else %}
+        <p align="center">Вы не авторизовались. Доступа к продуктам нет.</p>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>
+        Сайт Рассылок
+    </title>
+
+
+</head>
+<body>
+<br>
+<div class="d-print-table-row">
+    <a class="btn btn-primary" href="{% url 'mailings:index' %}" role="button">Главная</a>
+    <a class="btn btn-primary" href="{% url 'mailings:index' %}" role="button">Контакты</a>
+    {% if user.is_authenticated %}
+        <a class="btn btn-primary" href="{% url 'users:profile' %}" role="button">Профиль</a>
+        <a class="btn btn-primary" href="{% url 'users:logout' %}" role="button">Выйти</a>
+        <a class="btn btn-primary" href="{% url 'mailings:mailings_list' %}" role="button">Рассылки</a>
+        <a class="btn btn-primary" href="{% url 'clients:clients_list' %}" role="button">Клиенты</a>
+    {% else %}
+        <a class="btn btn-primary" href="{% url 'users:login' %}" role="button">Войти</a>
+        <a class="btn btn-primary" href="{% url 'users:register' %}" role="button">Регистрация</a>
+    {% endif %}
+    <br>
+    <br>
+</div>
+<h1 class="text-lg-center">Добро пожаловать на сайт рассылок</h1>
+
+
+{% block content %}
+{% endblock %}
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+</html>
